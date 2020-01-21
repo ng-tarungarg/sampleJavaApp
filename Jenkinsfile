@@ -45,48 +45,48 @@ pipeline
 				bat "mvn test"
 			}
 		}
-		stage ('Sonar Analysis')
-		{
-			steps
-			{
-				withSonarQubeEnv("Test_Sonar") 
-				{
-					bat "mvn sonar:sonar"
-				}
-			}
-		}
-		stage ('Upload to Artifactory')
-		{
-			steps
-			{
-				rtMavenDeployer (
-                    id: 'deployer',
-                    serverId: '123456789@artifactory',
-                    releaseRepo: 'CI-Automation-JAVA',
-                    snapshotRepo: 'CI-Automation-JAVA'
-                )
-                rtMavenRun (
-                    pom: 'pom.xml',
-                    goals: 'clean install',
-                    deployerId: 'deployer',
-                )
-                rtPublishBuildInfo (
-                    serverId: '123456789@artifactory',
-                )
-			}
-		}
+		// stage ('Sonar Analysis')
+		// {
+		// 	steps
+		// 	{
+		// 		withSonarQubeEnv("Test_Sonar") 
+		// 		{
+		// 			bat "mvn sonar:sonar"
+		// 		}
+		// 	}
+		// }
+		// stage ('Upload to Artifactory')
+		// {
+		// 	steps
+		// 	{
+		// 		rtMavenDeployer (
+    //                 id: 'deployer',
+    //                 serverId: '123456789@artifactory',
+    //                 releaseRepo: 'CI-Automation-JAVA',
+    //                 snapshotRepo: 'CI-Automation-JAVA'
+    //             )
+    //             rtMavenRun (
+    //                 pom: 'pom.xml',
+    //                 goals: 'clean install',
+    //                 deployerId: 'deployer',
+    //             )
+    //             rtPublishBuildInfo (
+    //                 serverId: '123456789@artifactory',
+    //             )
+		// 	}
+		// }
 		stage ('Docker Image')
 		{
 			steps
 			{
-				sh returnStdout: true, script: '/bin/docker build -t dtr.nagarro.com:443/devopssampleapplication_tarungarg:${BUILD_NUMBER} -f Dockerfile .'
+				sh returnStdout: true, script: '/bin/docker build -t devopssampleapplication_tarungarg:${BUILD_NUMBER} -f Dockerfile .'
 			}
 		}
 		stage ('Push to DTR')
 	    {
 		    steps
 		    {
-		    	sh returnStdout: true, script: '/bin/docker push dtr.nagarro.com:443/devopssampleapplication_tarungarg:${BUILD_NUMBER}'
+		    	sh returnStdout: true, script: '/bin/docker push devopssampleapplication_tarungarg:${BUILD_NUMBER}'
 		    }
 	    }
         stage ('Stop Running container')
@@ -108,7 +108,7 @@ pipeline
 		{
 		    steps
 		    {
-		        sh 'docker run --name devopssampleapplication_tarungarg -d -p 5016:8080 dtr.nagarro.com:443/devopssampleapplication_tarungarg:${BUILD_NUMBER}'
+		        sh 'docker run --name devopssampleapplication_tarungarg -d -p 5016:8080 devopssampleapplication_tarungarg:${BUILD_NUMBER}'
 		    }
 		}
 	}
