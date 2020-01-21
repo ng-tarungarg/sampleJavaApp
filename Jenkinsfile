@@ -79,21 +79,21 @@ pipeline
 		{
 			steps
 			{
-				sh returnStdout: true, script: 'docker build -t devopssampleapplication_tarungarg:${BUILD_NUMBER} -f Dockerfile .'
+				bat returnStdout: true, script: 'docker build -t devopssampleapplication_tarungarg:${BUILD_NUMBER} -f Dockerfile .'
 			}
 		}
 		stage ('Push to DTR')
 	    {
 		    steps
 		    {
-		    	sh returnStdout: true, script: 'docker push devopssampleapplication_tarungarg:${BUILD_NUMBER}'
+		    	bat returnStdout: true, script: 'docker push devopssampleapplication_tarungarg:${BUILD_NUMBER}'
 		    }
 	    }
         stage ('Stop Running container')
     	{
 	        steps
 	        {
-	            sh '''
+	            bat '''
                     ContainerID=$(docker ps | grep 5016 | cut -d " " -f 1)
                     if [  $ContainerID ]
                     then
@@ -108,7 +108,7 @@ pipeline
 		{
 		    steps
 		    {
-		        sh 'docker run --name devopssampleapplication_tarungarg -d -p 5016:8080 devopssampleapplication_tarungarg:${BUILD_NUMBER}'
+		        bat 'docker run --name devopssampleapplication_tarungarg -d -p 5016:8080 devopssampleapplication_tarungarg:${BUILD_NUMBER}'
 		    }
 		}
 	}
