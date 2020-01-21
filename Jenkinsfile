@@ -79,14 +79,14 @@ pipeline
 		{
 			steps
 			{
-				sh returnStdout: true, script: '/bin/docker build -t devopssampleapplication_tarungarg:${BUILD_NUMBER} -f Dockerfile .'
+				sh returnStdout: true, script: 'docker build -t devopssampleapplication_tarungarg:${BUILD_NUMBER} -f Dockerfile .'
 			}
 		}
 		stage ('Push to DTR')
 	    {
 		    steps
 		    {
-		    	sh returnStdout: true, script: '/bin/docker push devopssampleapplication_tarungarg:${BUILD_NUMBER}'
+		    	sh returnStdout: true, script: 'docker push devopssampleapplication_tarungarg:${BUILD_NUMBER}'
 		    }
 	    }
         stage ('Stop Running container')
