@@ -105,7 +105,7 @@ pipeline
 		{
 		    steps
 		    {
-		        bat 'docker run --name devopssampleapplication_tarungarg -d -p 5016:8080 devopssampleapplication_tarungarg:${BUILD_NUMBER}'
+		        bat 'docker run --name devopssampleapplication_tarungarg -d -p 5016:8080 devopssampleapplication_tarungarg:%BUILD_NUMBER%'
 		    }
 		}
 	}
