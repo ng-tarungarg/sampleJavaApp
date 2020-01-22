@@ -94,7 +94,7 @@ pipeline
 	        steps
 	        {
 	            bat '''
-                    ContainerID=$(docker ps | grep 5016 | cut -d " " -f 1)
+                    ContainerID=$(docker ps | find /I "5016" | cut -d " " -f 1)
                     if [  $ContainerID ]
                     then
                         docker stop $ContainerID
