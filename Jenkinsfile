@@ -45,36 +45,36 @@ pipeline
 				bat "mvn test"
 			}
 		}
-		// stage ('Sonar Analysis')
-		// {
-		// 	steps
-		// 	{
-		// 		withSonarQubeEnv("Test_Sonar") 
-		// 		{
-		// 			bat "mvn sonar:sonar"
-		// 		}
-		// 	}
-		// }
-		// stage ('Upload to Artifactory')
-		// {
-		// 	steps
-		// 	{
-		// 		rtMavenDeployer (
-    //                 id: 'deployer',
-    //                 serverId: '123456789@artifactory',
-    //                 releaseRepo: 'CI-Automation-JAVA',
-    //                 snapshotRepo: 'CI-Automation-JAVA'
-    //             )
-    //             rtMavenRun (
-    //                 pom: 'pom.xml',
-    //                 goals: 'clean install',
-    //                 deployerId: 'deployer',
-    //             )
-    //             rtPublishBuildInfo (
-    //                 serverId: '123456789@artifactory',
-    //             )
-		// 	}
-		// }
+		stage ('Sonar Analysis')
+		{
+			steps
+			{
+				withSonarQubeEnv("Test_Sonar") 
+				{
+					bat "mvn sonar:sonar"
+				}
+			}
+		}
+		stage ('Upload to Artifactory')
+		{
+			steps
+			{
+				rtMavenDeployer (
+                    id: 'deployer',
+                    serverId: '123456789@artifactory',
+                    releaseRepo: 'CI-Automation-JAVA',
+                    snapshotRepo: 'CI-Automation-JAVA'
+                )
+                rtMavenRun (
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    deployerId: 'deployer',
+                )
+                rtPublishBuildInfo (
+                    serverId: '123456789@artifactory',
+                )
+			}
+		}
 		stage ('Docker Image')
 		{
 			steps
