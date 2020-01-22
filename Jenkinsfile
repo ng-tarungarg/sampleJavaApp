@@ -93,8 +93,8 @@ pipeline
     	{
 	        steps
 	        {
-	            sh '''
-                    ContainerID=$(docker ps | grep 5016 | cut -d " " -f 1)
+	            bat '''
+                    SET ContainerID=$(echo off & (for /f "tokens=1" %a in ('docker ps ^| findstr 5016') do echo %a) & echo on)
                     if [  %ContainerID% ]
                     then
                         docker stop %ContainerID%
