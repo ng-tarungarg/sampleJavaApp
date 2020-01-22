@@ -94,11 +94,11 @@ pipeline
 	        steps
 	        {
 	            bat '''
-                    ContainerID=$(docker ps | find /I "5016" | cut -d " " -f 1)
-                    if [  $ContainerID ]
+                    set ContainerID=$(docker ps | find /I "5016" | cut -d " " -f 1)
+                    if [  %ContainerID% ]
                     then
-                        docker stop $ContainerID
-                        docker rm -f $ContainerID
+                        docker stop %ContainerID%
+                        docker rm -f %ContainerID%
                     fi
                 '''
 	        }
