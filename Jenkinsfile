@@ -94,7 +94,7 @@ pipeline
 	        steps
 	        {
 	            bat '''
-                    SET ContainerID=echo off & (for /f "tokens=1" %a in ('docker ps ^| findstr 5016') do echo %a) & echo on
+                    ContainerID=echo off & (for /f "tokens=1" %a in ('docker ps ^| findstr 5016') do echo %a) & echo on
                     if [  %ContainerID% ]
                     then
                         docker stop %ContainerID%
