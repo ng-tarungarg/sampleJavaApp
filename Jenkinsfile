@@ -94,12 +94,9 @@ pipeline
 	        steps
 	        {
 	            bat '''
-                    ContainerID=echo off & (for /f "tokens=1" %a in ('docker ps ^| findstr 5016') do echo %a) & echo on
-                    if [  %ContainerID% ]
-                    then
-                        docker stop %ContainerID%
-                        docker rm -f %ContainerID%
-                    fi
+                    	@echo off
+			FOR /f "tokens=*" %%i IN ('docker ps -aq') DO docker rm %%i
+			FOR /f "tokens=*" %%i IN ('docker images --format "{{.ID}}"') DO docker rmi %%i
                 '''
 	        }
 	    }
