@@ -45,36 +45,36 @@ pipeline
 				bat "mvn test"
 			}
 		}
-		stage ('Sonar Analysis')
-		{
-			steps
-			{
-				withSonarQubeEnv("Test_Sonar") 
-				{
-					bat "mvn sonar:sonar"
-				}
-			}
-		}
-		stage ('Upload to Artifactory')
-		{
-			steps
-			{
-				rtMavenDeployer (
-                    id: 'deployer',
-                    serverId: '123456789@artifactory',
-                    releaseRepo: 'CI-Automation-JAVA',
-                    snapshotRepo: 'CI-Automation-JAVA'
-                )
-                rtMavenRun (
-                    pom: 'pom.xml',
-                    goals: 'clean install',
-                    deployerId: 'deployer',
-                )
-                rtPublishBuildInfo (
-                    serverId: '123456789@artifactory',
-                )
-			}
-		}
+		// stage ('Sonar Analysis')
+		// {
+		// 	steps
+		// 	{
+		// 		withSonarQubeEnv("Test_Sonar") 
+		// 		{
+		// 			bat "mvn sonar:sonar"
+		// 		}
+		// 	}
+		// }
+		// stage ('Upload to Artifactory')
+		// {
+		// 	steps
+		// 	{
+		// 		rtMavenDeployer (
+    //                 id: 'deployer',
+    //                 serverId: '123456789@artifactory',
+    //                 releaseRepo: 'CI-Automation-JAVA',
+    //                 snapshotRepo: 'CI-Automation-JAVA'
+    //             )
+    //             rtMavenRun (
+    //                 pom: 'pom.xml',
+    //                 goals: 'clean install',
+    //                 deployerId: 'deployer',
+    //             )
+    //             rtPublishBuildInfo (
+    //                 serverId: '123456789@artifactory',
+    //             )
+		// 	}
+		// }
 		stage ('Docker Image')
 		{
 			steps
@@ -89,16 +89,16 @@ pipeline
 		    	bat returnStdout: true, script: 'docker push devopssampleapplication_tarungarg:%BUILD_NUMBER%'
 		    }
 	    }
-        stage ('Stop Running container')
+      stage ('Stop Running container')
     	{
 	        steps
 	        {
-	            bat '''
-                    set ContainerID=docker ps | find /I "5016" | awk '{print $1}'
-                    if [  %ContainerID% ]
+	            sh '''
+                    ContainerID=$(docker ps | grep 5016 | cut -d " " -f 1)
+                    if [  $ContainerID ]
                     then
-                        docker stop %ContainerID%
-                        docker rm -f %ContainerID%
+                        docker stop $ContainerID
+                        docker rm -f $ContainerID
                     fi
                 '''
 	        }
