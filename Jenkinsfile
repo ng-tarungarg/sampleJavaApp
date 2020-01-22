@@ -45,36 +45,36 @@ pipeline
 				bat "mvn test"
 			}
 		}
-		// stage ('Sonar Analysis')
-		// {
-		// 	steps
-		// 	{
-		// 		withSonarQubeEnv("Test_Sonar") 
-		// 		{
-		// 			bat "mvn sonar:sonar"
-		// 		}
-		// 	}
-		// }
-		// stage ('Upload to Artifactory')
-		// {
-		// 	steps
-		// 	{
-		// 		rtMavenDeployer (
-    //                 id: 'deployer',
-    //                 serverId: '123456789@artifactory',
-    //                 releaseRepo: 'CI-Automation-JAVA',
-    //                 snapshotRepo: 'CI-Automation-JAVA'
-    //             )
-    //             rtMavenRun (
-    //                 pom: 'pom.xml',
-    //                 goals: 'clean install',
-    //                 deployerId: 'deployer',
-    //             )
-    //             rtPublishBuildInfo (
-    //                 serverId: '123456789@artifactory',
-    //             )
-		// 	}
-		// }
+		stage ('Sonar Analysis')
+		{
+			steps
+			{
+				withSonarQubeEnv("Test_Sonar") 
+				{
+					bat "mvn sonar:sonar"
+				}
+			}
+		}
+		stage ('Upload to Artifactory')
+		{
+			steps
+			{
+				rtMavenDeployer (
+                    id: 'deployer',
+                    serverId: '123456789@artifactory',
+                    releaseRepo: 'CI-Automation-JAVA',
+                    snapshotRepo: 'CI-Automation-JAVA'
+                )
+                rtMavenRun (
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    deployerId: 'deployer',
+                )
+                rtPublishBuildInfo (
+                    serverId: '123456789@artifactory',
+                )
+			}
+		}
 		stage ('Docker Image')
 		{
 			steps
@@ -82,13 +82,13 @@ pipeline
 				bat returnStdout: true, script: 'docker build -t devopssampleapplication_tarungarg:%BUILD_NUMBER% -f Dockerfile .'
 			}
 		}
-		// stage ('Push to DTR')
-	    // {
-		//     steps
-		//     {
-		//     	bat returnStdout: true, script: 'docker push devopssampleapplication_tarungarg:%BUILD_NUMBER%'
-		//     }
-	    // }
+		stage ('Push to DTR')
+	    {
+		    steps
+		    {
+		    	bat returnStdout: true, script: 'docker push devopssampleapplication_tarungarg:%BUILD_NUMBER%'
+		    }
+	    }
         stage ('Stop Running container')
     	{
 	        steps
