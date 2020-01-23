@@ -62,8 +62,8 @@ pipeline
 				rtMavenDeployer (
                     id: 'deployer',
                     serverId: '123456789@artifactory',
-                    releaseRepo: ' tarungarg_maven',
-                    snapshotRepo: ' tarungarg_maven'
+                    releaseRepo: ' nagp_tarungarg_maven',
+                    snapshotRepo: ' nagp_tarungarg_maven'
                 )
                 rtMavenRun (
                     pom: 'pom.xml',
