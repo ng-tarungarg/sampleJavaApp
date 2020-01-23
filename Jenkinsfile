@@ -98,11 +98,10 @@ pipeline
 			for /f "tokens=*" %%a in ('docker ps -q --filter "name=devopssampleapplication_tarungarg"') do set ContainerID=%%a
 			echo got: %ContainerID%
 			
-		    if [  %ContainerID% ]
-		    then
-			docker stop %ContainerID%
-			docker rm -f %ContainerID%
-		    fi
+			IF EXIST %ContainerID% (
+				docker stop %ContainerID%
+				docker rm -f %ContainerID%
+			)
                 '''
 	        }
 	    }
