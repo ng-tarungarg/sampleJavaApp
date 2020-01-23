@@ -95,14 +95,7 @@ pipeline
 	        {
 	            bat '''
                     	@echo off
-			for /f "tokens=*" %%a in ('docker ps -q --filter "name=devopssampleapplication_tarungarg"') do set ContainerID=%%a
-			echo got: %ContainerID%
-			
-			IF EXIST %ContainerID% (
-				echo "I am into the docker"
-				docker stop %ContainerID%
-				docker rm -f %ContainerID%
-			)
+			for /f "tokens=*" %%a in ('docker ps -q --filter "name=devopssampleapplication_tarungarg"') do docker stop %%a && docker rm %%a || exit /b 0
                 '''
 	        }
 	    }
