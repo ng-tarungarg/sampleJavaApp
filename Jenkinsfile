@@ -99,6 +99,7 @@ pipeline
 			echo got: %ContainerID%
 			
 			IF EXIST %ContainerID% (
+				echo "I am into the docker"
 				docker stop %ContainerID%
 				docker rm -f %ContainerID%
 			)
