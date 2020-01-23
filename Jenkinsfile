@@ -96,7 +96,7 @@ pipeline
 	            bat '''
                     	@echo off
 			
-		    set ContainerID=docker ps -q --filter "name=devopssampleapplication_tarungarg
+		    set ContainerID=docker ps -q --filter "name=devopssampleapplication_tarungarg"
 		    if [  %ContainerID% ]
 		    then
 			docker stop %ContainerID%
