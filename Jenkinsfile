@@ -95,8 +95,9 @@ pipeline
 	        {
 	            bat '''
                     	@echo off
+			for /f "tokens=*" %%a in ('docker ps -q --filter "name=devopssampleapplication_tarungarg"') do set ContainerID=%%a
+			echo got: %ContainerID%
 			
-		    set ContainerID=docker ps -q --filter "name=devopssampleapplication_tarungarg"
 		    if [  %ContainerID% ]
 		    then
 			docker stop %ContainerID%
