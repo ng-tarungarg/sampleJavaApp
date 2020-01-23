@@ -95,7 +95,7 @@ pipeline
 	        {
 	            bat '''
                     	@echo off
-			FOR /f "tokens=*" %%i IN ('docker ps') DO docker stop %%i && docker rm %%i || exit /b 0
+			FOR /f "tokens=*" %%i IN ('docker ps | find 5016') DO docker stop %%i && docker rm %%i || exit /b 0
                 '''
 	        }
 	    }
