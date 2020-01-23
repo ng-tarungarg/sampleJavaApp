@@ -95,7 +95,13 @@ pipeline
 	        {
 	            bat '''
                     	@echo off
-			FOR /f "tokens=*" %%i IN ('docker ps | find 5016') DO docker stop %%i && docker rm %%i || exit /b 0
+			
+		    set ContainerID=docker ps -q --filter "name=devopssampleapplication_tarungarg
+		    if [  %ContainerID% ]
+		    then
+			docker stop %ContainerID%
+			docker rm -f %ContainerID%
+		    fi
                 '''
 	        }
 	    }
